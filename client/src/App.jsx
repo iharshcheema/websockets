@@ -10,9 +10,17 @@ function App() {
     setMessage('')
   }
 
+  const handleRoomJoin = (e) => {
+    e.preventDefault()
+    socket.emit('join-room', roomname)
+    setRoomname('')
+  }
+
   const [message, setMessage] = useState('')
   const [room, setRoom] = useState('')
   const [messages, setMessages] = useState([])
+  const [roomname, setRoomname] = useState('')
+
   useMemo(() => {
     console.log(messages)
   }, [messages])
@@ -42,6 +50,20 @@ function App() {
       <h1>Chat app</h1>
 
       <div>
+        {/* joining a room  */}
+        <h2>Join a room</h2>
+        <form onSubmit={handleRoomJoin}>
+          <label htmlFor="">Room name</label>
+          <input
+            type="text"
+            value={roomname}
+            onChange={(e) => setRoomname(e.target.value)}
+          />
+          <button type="submit">Join room</button>
+        </form>
+        <h2>Send a message </h2>
+
+        {/* sending a message  */}
         <form onSubmit={submitHandler}>
           <label htmlFor="">message</label>
           <input
@@ -59,6 +81,7 @@ function App() {
           <button type="submit">Send</button>
         </form>
       </div>
+      {/* showing messages  */}
       <div>
         {messages.map((value) => {
           return <p key={Math.random()}>{value}</p>

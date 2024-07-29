@@ -29,9 +29,20 @@ io.on('connection', (socket) => {
 
   socket.on('message', (data) => {
     console.log(data)
+    // this will send the message to all the sockets in the same room
     // io.emit('received-message', data)
+
+    // this will send the message to all the sockets in the same room, excluding the sender
     // socket.broadcast.emit('received-message', data)
+
+    // this will send the message to all the sockets in the specified room
     io.to(data.room).emit('received-message', data)
+  })
+
+  // joining a room
+
+  socket.on('join-room', (data) => {
+    socket.join(data)
   })
 
   // when a socket disconnects
