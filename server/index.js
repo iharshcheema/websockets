@@ -36,7 +36,10 @@ io.on('connection', (socket) => {
     // socket.broadcast.emit('received-message', data)
 
     // this will send the message to all the sockets in the specified room
-    io.to(data.room).emit('received-message', data)
+    // io.to(data.room).emit('received-message', data)
+
+    // this will send the message to all the sockets in the specified room, excluding the sender
+    socket.to(data.room).emit('received-message', data)
   })
 
   // joining a room
